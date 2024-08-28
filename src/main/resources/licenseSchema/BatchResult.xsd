@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.ericsson.com/oss/elisTranslationHandler"
+        xmlns="http://www.ericsson.com/oss/elisTranslationHandler"
+        elementFormDefault="qualified">
+
+    <xs:element name="batchStatusInformation" type="batchStatusInformation"/>
+
+    <xs:complexType name="batchStatusInformation">
+            <xs:sequence>
+                <xs:element name="requestId" type="xs:string" />
+                <xs:element name="successMachines" type="machineList" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="errorMachines" type="machineList" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+    </xs:complexType>
+
+    <!-- definition of a single machine (node) -->
+    <xs:complexType name="activationMachineInfo">
+        <xs:attribute name="machineName" type="xs:string" use="required"/>
+        <xs:attribute name="error" type="xs:string"/>
+    </xs:complexType>
+
+    <!-- definition of list of machines (nodes) -->
+    <xs:complexType name="machineList">
+        <xs:sequence>
+            <xs:element name="activationMachineInfo" type="activationMachineInfo" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- definition of overall file structure -->
+
+
+</xs:schema>

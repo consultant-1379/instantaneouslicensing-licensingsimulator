@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.03" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="licFile" type="licFile"/>
+
+    <xs:complexType name="licFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="body" type="body"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="PKIsignature" type="PKIsignature"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="certificatechain" type="certificatechain"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PKIsignature">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="issuer" type="xs:string" use="required"/>
+                <xs:attribute name="serialnumber" type="xs:int" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="certificatechain">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="1" minOccurs="0" name="prodcert" type="xs:string"/>
+            <xs:element maxOccurs="3" minOccurs="0" name="cacert" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="body">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="1" minOccurs="1" name="sequenceNumber" type="sequenceNumber"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="SWLT" type="SWLT"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="ELSN" type="ELSN"/>
+        </xs:sequence>
+        <xs:attribute name="formatVersion" type="formatVersion" use="required"/>
+        <xs:attribute name="signatureType" type="signatureType" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="SWLT">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="1" minOccurs="1" name="generalInfo" type="generalInfo"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="fingerprint" type="fingerprint"/>
+        </xs:sequence>
+        <xs:attribute name="customerId" type="xs:string" use="required"/>
+        <xs:attribute name="productType" type="xs:string" use="required"/>
+        <xs:attribute name="swltId" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ELSN">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="1" minOccurs="1" name="generalInfo" type="generalInfo"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="fingerprint" type="fingerprint"/>
+        </xs:sequence>
+        <xs:attribute name="elsnId" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="generalInfo">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="1" minOccurs="1" name="generated" type="xs:dateTime"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="issuer" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="fingerprint">
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="capacityKey" type="capacityKey"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="featureKey" type="featureKey"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="emergencyResetKey" type="emergencyResetKey"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="maintenanceResetKey" type="maintenanceResetKey"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="print" type="fingerprintValue" use="required"/>
+        <xs:attribute name="method" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="capacityKey">
+        <xs:all maxOccurs="1" minOccurs="1">
+            <xs:element name="description" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element minOccurs="0" name="capacity" type="xs:int"/>
+            <xs:element name="start" type="DateType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="stop" type="DateType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="noStop" type="DateType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="noHardLimit" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="hardLimit" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="notContractuallyLimited" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="ComplementaryData" type="ComplementaryData" maxOccurs="1" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ComplementaryData">
+        <xs:all maxOccurs="1" minOccurs="0">
+            <xs:element name="HWAC" type="xs:string" maxOccurs="1" minOccurs="0"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="featureKey">
+        <xs:all maxOccurs="1" minOccurs="1">
+            <xs:element name="description" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element minOccurs="0" name="capacity" type="xs:int"/>
+            <xs:element name="start" type="DateType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="stop" type="DateType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="noStop" type="DateType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="noHardLimit" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="hardLimit" type="xs:string" maxOccurs="1" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="emergencyResetKey">
+        <xs:all maxOccurs="1" minOccurs="1">
+            <xs:element name="start" type="DateType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="stop" type="DateType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="noStop" type="DateType" maxOccurs="1" minOccurs="0"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="maintenanceResetKey">
+        <xs:all maxOccurs="1" minOccurs="1">
+            <xs:element name="start" type="DateType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="stop" type="DateType" maxOccurs="1" minOccurs="1"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:simpleType name="EmptyString">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DateType">
+        <xs:union memberTypes="xs:date EmptyString"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="fingerprintValue">
+        <xs:annotation>
+            <xs:documentation>whitespace is not allowed in fingerprint. Fingerprint must be handled as case in-sensitive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="3"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="signatureType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[1-6]"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="formatVersion">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([1-2]\.0)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="abcStyleType">
+        <xs:restriction base="xs:string">
+            <!-- Three parts                               -->
+            <!-- optional Prefix including ending slash    -->
+            <!-- base                                      -->
+            <!-- optional Suffix including leading slash   -->
+            <xs:pattern value="(([a-zA-Z0-9])+[/])?([a-zA-Z0-9])+([/]([a-zA-Z0-9])+)?"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="keyId">
+        <xs:annotation>
+            <xs:documentation>Must be handled as case in-sensitive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="abcStyleType"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="sequenceNumber">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

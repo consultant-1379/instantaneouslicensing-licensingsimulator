@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" version="2.1">
+  <bindings schemaLocation="../licenseSchema/LicenseKeyFile.xsd">
+    <schemaBindings>
+      <package name="com.ericsson.enm.shm.instantaneouslicensing.sslserver.model.lkf"/>
+    </schemaBindings>
+  </bindings>
+    <bindings schemaLocation="../licenseSchema/LicenseDataFile.xsd">
+    <schemaBindings>
+      <package name="com.ericsson.enm.shm.instantaneouslicensing.sslserver.model.ldf"/>
+    </schemaBindings>
+  </bindings>
+    <bindings schemaLocation="../licenseSchema/BatchResult.xsd">
+        <schemaBindings>
+            <package name="com.ericsson.enm.shm.instantaneouslicensing.sslserver.model.batchresult.v1"/>
+        </schemaBindings>
+    </bindings>
+</bindings>

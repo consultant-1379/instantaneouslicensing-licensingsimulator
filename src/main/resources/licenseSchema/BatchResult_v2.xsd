@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.ericsson.com/oss/elisTranslationHandler"
+        xmlns="http://www.ericsson.com/oss/elisTranslationHandler"
+        elementFormDefault="qualified">
+
+    <xs:element name="batchStatusInformation" type="batchStatusInformation"/>
+    <!-- definition of overall file structure -->
+    <xs:complexType name="batchStatusInformation">
+        <xs:sequence>
+            <xs:element name="requestId" type="xs:string"/>
+            <xs:element name="successMachines" type="machineList" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="errorMachines" type="machineList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- definition of list of machines (nodes) -->
+    <xs:complexType name="machineList">
+        <xs:sequence>
+            <xs:element name="activationMachineInfo" type="activationMachineInfo" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- definition of a single machine (node) -->
+    <xs:complexType name="activationMachineInfo">
+        <xs:sequence>
+            <xs:element name="errorDetails" type="errorList" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="machineName" type="xs:string" use="required"/>
+    </xs:complexType>
+
+
+    <!-- definition of errorDetail -->
+    <xs:complexType name="errorList">
+        <xs:attribute name="code" type="xs:string" use="required"></xs:attribute>
+        <xs:attribute name="category" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:NMTOKEN">
+                    <xs:enumeration value="Error"/>
+                    <xs:enumeration value="Warning"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="description" type="xs:string" use="required"></xs:attribute>
+        <xs:attribute name="cxcList" type="xs:string"></xs:attribute>
+        <xs:attribute name="licenseList" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema targetNamespace="http://www.ericsson.se/oss/shm/ldf/" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.03"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ericsson.se/oss/shm/ldf/">
+
+    <xs:element name="LicenseDataFile" type="LicenseDataFile"/>
+
+    <xs:complexType name="LicenseDataFile">
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="1" name="Body" type="Body"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Signature" type="Signature"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Body">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element minOccurs="1" maxOccurs="1" name="LicenseKeyFileName" type="xs:string"/>
+            <xs:element minOccurs="1" maxOccurs="1" name="TargetNodeType" type="TargetNodeType"/>
+            <xs:element minOccurs="1" maxOccurs="1" name="Fingerprint" type="NodeFingerprint"/>
+
+            <xs:element minOccurs="1" maxOccurs="1" name="SequenceNumber" type="SequenceNumber"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Generated" type="xs:dateTime"/>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="LicenseKey" type="LicenseKey"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LicenseKey">
+        <xs:all maxOccurs="1" minOccurs="1">
+            <xs:element minOccurs="0" name="Type" type="LicenseKeyType"/>
+            <xs:element name="Description" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element minOccurs="0" name="value" type="xs:int"/>
+            <xs:element name="start" type="DateType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="stop" type="DateType" maxOccurs="1" minOccurs="1"/>
+        </xs:all>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="LicenseKeyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FEATURE"/>
+            <xs:enumeration value="CAPACITY"/>
+            <xs:enumeration value="EMERGENCYRESET"/>
+            <xs:enumeration value="MAINTENANCERESETKEY"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="EmptyString">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DateType">
+        <xs:union memberTypes="xs:date EmptyString"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="Signature">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="TargetNodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LTE"/>
+            <xs:enumeration value="M-MGw"/>
+            <xs:enumeration value="WRAN"/>
+            <xs:enumeration value="BSC"/>
+            <xs:enumeration value="MSC"/>
+            <xs:enumeration value="TCU"/>
+            <xs:enumeration value="HLR-FE"/>
+            <xs:enumeration value="Baseband"/>
+            <xs:enumeration value="BasebandT"/>
+            <xs:enumeration value="SGSN-MME ELIM 2"/>
+            <xs:enumeration value="SGSN"/>
+            <xs:enumeration value="Router 6000"/>
+            <xs:enumeration value="IOT"/>
+            <xs:enumeration value="SAPC"/>
+            <xs:enumeration value="MINI-LINK"/>
+            <xs:enumeration value="Radio-vNodes"/>
+            <xs:enumeration value="VTF"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SequenceNumber">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PrintType">
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="NodeFingerprint">
+        <xs:complexContent>
+            <xs:extension base="Fingerprint">
+                <xs:sequence maxOccurs="1" minOccurs="0">
+                    <xs:element name="MultipleFingerprints" type="MultipleFingerprints"></xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MultipleFingerprints">
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="Fingerprint" type="Fingerprint"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fingerprint">
+        <xs:attribute name="print" type="PrintType"></xs:attribute>
+    </xs:complexType>
+
+</xs:schema>
